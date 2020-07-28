@@ -30,6 +30,7 @@
       appId: "1:129417103404:web:31fc7f124bca97d143a989"
     };
     firebase.initializeApp(config);
+    var db = firebase.firestore();
 
     db.collection("readings").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
