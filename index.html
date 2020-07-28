@@ -11,11 +11,12 @@
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
 </head>
 
 <body>
-  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
 
   <script>
     var config = {
@@ -30,12 +31,13 @@
     firebase.initializeApp(config);
     var db = firebase.firestore();
 
-    db.collection("readings").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
+    $(document).ready(function(){
+      db.collection("readings").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+        });
       });
     });
-  </script>
   </script>
 </body>
 </html>
