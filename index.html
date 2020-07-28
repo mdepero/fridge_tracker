@@ -78,16 +78,17 @@
       db.collection("readings")
         .get()
         .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc, index, array) {
-                var reading_datetime = new Date(doc.data().time_iso);
-                myLineChart.data.labels.push(reading_datetime);
-                myLineChart.data.datasets[0].data.push(doc.data().reading);
-                myLineChart.update();
-                $("#image_links").append('<tr><td><p><a href="https://storage.googleapis.com/fridge_tracker_images_bucket/'
+          querySnapshot.forEach(function(doc, index, array) {
+            if (doc.data().reading == NaN) break;
+            var reading_datetime = new Date(doc.data().time_iso);
+            myLineChart.data.labels.push(reading_datetime);
+            myLineChart.data.datasets[0].data.push(doc.data().reading);
+            myLineChart.update();
+            $("#image_links").append('<tr><td><p><a href="https://storage.googleapis.com/fridge_tracker_images_bucket/'
                                          +doc.data().image_id+'" target="_blank">'
                                          +reading_datetime.toLocaleString()
                                          +'</a></p></td><td><p>'+doc.data().reading+'°F</p></td></tr>');
-            });
+          });
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
