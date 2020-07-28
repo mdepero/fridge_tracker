@@ -7,15 +7,29 @@
   <title>The HTML5</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
+  
+  <style>
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1, h2 { text-align: center; }
+  </style>
 
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </head>
 
 <body>
+  <h1>1400 College Ave</h1>
+  <h2>Fridge Temperature Reporting
+  <canvas id="myChart" width="600" height="400" class="center"></canvas>
 
   <script>
     var config = {
@@ -29,19 +43,22 @@
     };
     firebase.initializeApp(config);
     var db = firebase.firestore();
+    var chart_data = [];
 
-    db.collection("readings")
-      .get()
-      .then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-              // doc.data() is never undefined for query doc snapshots
-              console.log(doc.id, " => ", doc.data());
-          });
-          console.log("Got to the success with maybe no entries");
-      })
-      .catch(function(error) {
-          console.log("Error getting documents: ", error);
-      });
+    $(document).ready(function(){
+      db.collection("readings")
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                chart_data.push({
+                  x: new Date(doc.data().time_iso),
+                  y: int(doc.data().reading)
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+    });
   </script>
 </body>
 </html>
