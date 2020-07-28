@@ -43,7 +43,13 @@
     };
     firebase.initializeApp(config);
     var db = firebase.firestore();
-    var chart_data = [];
+    var chart_data = {
+      labels: [],
+      datasets: [{
+        label: 'fridge_temp'
+        data: []
+      }]
+    };
     
     var ctx = document.getElementById('myChart');
     
@@ -57,10 +63,8 @@
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc, index, array) {
-                myLineChart.data.push({
-                  x: new Date(doc.data().time_iso),
-                  y: doc.data().reading
-                });
+                myLineChart.data.labels.push(new Date(doc.data().time_iso));
+                myLineChart.data.datasets[0].data.push(doc.data().reading);
                 myLineChart.update();
             });
         })
