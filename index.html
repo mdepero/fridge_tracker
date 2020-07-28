@@ -59,7 +59,7 @@
             querySnapshot.forEach(function(doc, index, array) {
                 myLineChart.data.push({
                   x: new Date(doc.data().time_iso),
-                  y: int(doc.data().reading)
+                  y: doc.data().reading
                 });
                 myLineChart.update();
             });
