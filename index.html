@@ -30,6 +30,7 @@
   <h1>1400 College Ave</h1>
   <h2>Fridge Temperature Reporting
   <canvas id="myChart" width="600" height="400" class="center"></canvas>
+  <h3>Temperature Reading Images</h3>
   <table id="image_links">
   </table>
 
@@ -83,10 +84,10 @@
                 myLineChart.data.labels.push(reading_datetime);
                 myLineChart.data.datasets[0].data.push(doc.data().reading);
                 myLineChart.update();
-                $("#image_links").append('<tr><td><a href="https://storage.googleapis.com/fridge_tracker_images_bucket/'
+                $("#image_links").append('<tr><td><p><a href="https://storage.googleapis.com/fridge_tracker_images_bucket/'
                                          +doc.data().image_id+'" target="_blank">'
                                          +reading_datetime.toLocaleString()
-                                         +'</a></td><td>'+doc.data().reading+'</td></tr>');
+                                         +'</a></p></td><td><p>'+doc.data().reading+'°F</p></td></tr>');
             });
         })
         .catch(function(error) {
