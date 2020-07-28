@@ -30,6 +30,8 @@
   <h1>1400 College Ave</h1>
   <h2>Fridge Temperature Reporting
   <canvas id="myChart" width="600" height="400" class="center"></canvas>
+  <table id="image_links">
+  </table>
 
   <script>
     var config = {
@@ -65,9 +67,14 @@
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc, index, array) {
-                myLineChart.data.labels.push(new Date(doc.data().time_iso));
+                var reading_datetime = new Date(doc.data().time_iso);
+                myLineChart.data.labels.push(reading_datetime);
                 myLineChart.data.datasets[0].data.push(doc.data().reading);
                 myLineChart.update();
+                $("#image_links").append('<tr><td><a href="https://storage.googleapis.com/fridge_tracker_images_bucket/'
+                                         +doc.data().image_id+'" target="_blank">'
+                                         +reading_datetime.toLocaleString()
+                                         +'</a></td><td>'+doc.data().reading+'</td></tr>');
             });
         })
         .catch(function(error) {
