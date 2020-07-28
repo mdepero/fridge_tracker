@@ -59,19 +59,17 @@
     var ctx = document.getElementById('myChart');
     
     var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: chart_data,
-        options: {
-          scales: {
-              xAxes: [{
-                  type: 'time',
-                  time: {
-                      displayFormats: {
-                          quarter: 'MM-DD hh:mm a'
-                      }
-                  }
-              }]
-          }
+      type: 'line',
+      data: chart_data,
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              unit: 'minute'
+            }
+          }]
+        }
       }
     });
 
