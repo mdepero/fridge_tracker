@@ -18,20 +18,25 @@
 <body>
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+
   <script>
-    // Initialize Firestore through Firebase
-    firebase.initializeApp({
-      apiKey: 'AIzaSyA0DYkwkEGeAkT2980_wUj5hmUjh1p-QiQ',
-      authDomain: 'fridge-tracker-284707.firebaseapp.com',
-      projectId: 'fridge-tracker-284707'
-    });
-    var db = firebase.firestore();
-    
+    var config = {
+      apiKey: "AIzaSyA0DYkwkEGeAkT2980_wUj5hmUjh1p-QiQ",
+      authDomain: "fridge-tracker-284707.firebaseapp.com",
+      databaseURL: "https://fridge-tracker-284707.firebaseio.com",
+      projectId: "fridge-tracker-284707",
+      storageBucket: "fridge-tracker-284707.appspot.com",
+      messagingSenderId: "129417103404",
+      appId: "1:129417103404:web:31fc7f124bca97d143a989"
+    };
+    firebase.initializeApp(config);
+
     db.collection("readings").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-      });
+    querySnapshot.forEach((doc) => {
+       console.log(`${doc.id} => ${doc.data()}`);
+       });
     });
+  </script>
   </script>
 </body>
 </html>
